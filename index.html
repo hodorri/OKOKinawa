@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 하반기 OK금융그룹 오키나와 연수 - 자기소개</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #89CFF0 0%, #4A90E2 50%, #F4E4C1 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-banner {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header h1 {
+            color: #2C5F8D;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #5A8FB8;
+            font-size: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px 20px;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: #5A8FB8;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #4A90E2, #2C5F8D);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2C5F8D;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E0F0FF;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4A90E2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #4A90E2, #2C5F8D);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(74, 144, 226, 0.5);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .filters {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background-image: url('attached_assets/오키나와 읏맨2_1760581135911.JPG');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            border-radius: 0 20px 0 50%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #E0F0FF;
+        }
+
+        .card-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2C5F8D;
+        }
+
+        .card-team-badge {
+            background: linear-gradient(135deg, #4A90E2, #2C5F8D);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .card-info {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .card-info strong {
+            color: #2C5F8D;
+            font-weight: 600;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            font-weight: 600;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #5A8FB8;
+            font-size: 16px;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #5A8FB8;
+            font-size: 16px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-banner">
+                <img src="attached_assets/오키나와 읏맨_1760581135904.JPG" alt="오키나와">
+            </div>
+            <h1>2025 OK금융그룹 리프레시 해외연수 · 오키나와</h1>
+            <p>자기소개서 제출 · 조회</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('input')">자기소개 입력</button>
+            <button class="tab-button" onclick="switchTab('view')">제출 내역 조회</button>
+        </div>
+
+        <div id="inputTab" class="tab-content active">
+            <div class="form-container">
+                <form id="introForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="team">편성 조 *</label>
+                            <select id="team" required>
+                                <option value="">선택하세요</option>
+                                <option value="1조">1조</option>
+                                <option value="2조">2조</option>
+                                <option value="3조">3조</option>
+                                <option value="4조">4조</option>
+                                <option value="5조">5조</option>
+                                <option value="6조">6조</option>
+                                <option value="7조">7조</option>
+                                <option value="8조">8조</option>
+                                <option value="9조">9조</option>
+                                <option value="10조">10조</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">이름 *</label>
+                            <input type="text" id="name" required placeholder="홍길동">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department">소속 팀/센터/지점 *</label>
+                            <input type="text" id="department" required placeholder="예: 디지털금융팀">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="age">나이 *</label>
+                            <input type="number" id="age" required placeholder="28">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hometown">고향/사는 곳 *</label>
+                            <input type="text" id="hometown" required placeholder="예: 서울시 강남구">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mbti">MBTI *</label>
+                            <input type="text" id="mbti" required placeholder="예: ENFP" maxlength="4">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="alcohol">음주량(소주기준) *</label>
+                            <input type="text" id="alcohol" required placeholder="예: 1병">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="smoking">흡연 여부 *</label>
+                            <select id="smoking" required>
+                                <option value="">선택하세요</option>
+                                <option value="비흡연">비흡연</option>
+                                <option value="흡연">흡연</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interest">요즘 관심사 *</label>
+                        <textarea id="interest" required placeholder="요즘 관심있는 것들을 자유롭게 적어주세요"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hobby">취미 *</label>
+                        <textarea id="hobby" required placeholder="취미나 좋아하는 활동을 적어주세요"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sad">근래 슬펐던 일 *</label>
+                        <textarea id="sad" required placeholder="최근 슬펐던 일이나 힘들었던 일을 나눠주세요"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="happy">근래 기뻤던 일 *</label>
+                        <textarea id="happy" required placeholder="최근 기뻤던 일이나 좋았던 일을 나눠주세요"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="strength">성격 장점 *</label>
+                        <textarea id="strength" required placeholder="본인의 성격 장점을 적어주세요"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weakness">성격 단점 *</label>
+                        <textarea id="weakness" required placeholder="본인의 성격 단점을 적어주세요"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="promise">조원들에게 약속 *</label>
+                        <textarea id="promise" required placeholder="조원들에게 약속하고 싶은 것을 적어주세요"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button">제출하기</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="viewTab" class="tab-content">
+            <div class="filters">
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="filterTeam">편성 조 필터</label>
+                        <select id="filterTeam" onchange="applyFilters()">
+                            <option value="">전체</option>
+                            <option value="1조">1조</option>
+                            <option value="2조">2조</option>
+                            <option value="3조">3조</option>
+                            <option value="4조">4조</option>
+                            <option value="5조">5조</option>
+                            <option value="6조">6조</option>
+                            <option value="7조">7조</option>
+                            <option value="8조">8조</option>
+                            <option value="9조">9조</option>
+                            <option value="10조">10조</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterName">이름 검색</label>
+                        <input type="text" id="filterName" placeholder="이름을 입력하세요" oninput="applyFilters()">
+                    </div>
+                </div>
+            </div>
+
+            <div id="cardsContainer" class="cards-container">
+                <div class="loading">데이터를 불러오는 중...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw-01aF6V5ZEcJz6RB3CPQRiEfhi38qEqV1ELM5ix05shXut_R0A7RiU3XLn5GmlHLr/exec';
+        let allData = [];
+
+        function switchTab(tab) {
+            const buttons = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            if (tab === 'input') {
+                buttons[0].classList.add('active');
+                document.getElementById('inputTab').classList.add('active');
+            } else {
+                buttons[1].classList.add('active');
+                document.getElementById('viewTab').classList.add('active');
+                loadData();
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        document.getElementById('introForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = {
+                action: 'create',
+                timestamp: new Date().toISOString(),
+                team: document.getElementById('team').value,
+                name: document.getElementById('name').value,
+                department: document.getElementById('department').value,
+                age: document.getElementById('age').value,
+                hometown: document.getElementById('hometown').value,
+                mbti: document.getElementById('mbti').value.toUpperCase(),
+                alcohol: document.getElementById('alcohol').value,
+                smoking: document.getElementById('smoking').value,
+                interest: document.getElementById('interest').value,
+                hobby: document.getElementById('hobby').value,
+                sad: document.getElementById('sad').value,
+                happy: document.getElementById('happy').value,
+                strength: document.getElementById('strength').value,
+                weakness: document.getElementById('weakness').value,
+                promise: document.getElementById('promise').value
+            };
+
+            try {
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                showToast('제출 완료!');
+                document.getElementById('introForm').reset();
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('제출 완료!');
+                document.getElementById('introForm').reset();
+            }
+        });
+
+        async function loadData() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '<div class="loading">데이터를 불러오는 중...</div>';
+
+            try {
+                const response = await fetch(`${GAS_URL}?action=read`);
+                const data = await response.json();
+                allData = data;
+                displayData(data);
+            } catch (error) {
+                console.error('Error:', error);
+                container.innerHTML = '<div class="no-data">데이터를 불러올 수 없습니다.</div>';
+            }
+        }
+
+        function displayData(data) {
+            const container = document.getElementById('cardsContainer');
+
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="no-data">아직 제출된 자기소개가 없습니다.</div>';
+                return;
+            }
+
+            container.innerHTML = data.map(item => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-name">${item.name || item['이름'] || ''}</div>
+                        <div class="card-team-badge">${item.team || item['편성 조'] || ''}</div>
+                    </div>
+                    <div class="card-info"><strong>소속:</strong> ${item.department || item['소속 팀/센터/지점'] || ''}</div>
+                    <div class="card-info"><strong>나이:</strong> ${item.age || item['나이'] || ''}</div>
+                    <div class="card-info"><strong>고향:</strong> ${item.hometown || item['고향/사는 곳'] || ''}</div>
+                    <div class="card-info"><strong>MBTI:</strong> ${item.mbti || item['MBTI'] || ''}</div>
+                    <div class="card-info"><strong>음주량:</strong> ${item.alcohol || item['음주량(소주기준)'] || ''}</div>
+                    <div class="card-info"><strong>흡연:</strong> ${item.smoking || item['흡연 여부'] || ''}</div>
+                    <div class="card-info"><strong>관심사:</strong> ${item.interest || item['요즘 관심사'] || ''}</div>
+                    <div class="card-info"><strong>취미:</strong> ${item.hobby || item['취미'] || ''}</div>
+                    <div class="card-info"><strong>장점:</strong> ${item.strength || item['성격 장점'] || ''}</div>
+                    <div class="card-info"><strong>단점:</strong> ${item.weakness || item['성격 단점'] || ''}</div>
+                    <div class="card-info"><strong>약속:</strong> ${item.promise || item['조원들에게 약속'] || ''}</div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const teamFilter = document.getElementById('filterTeam').value;
+            const nameFilter = document.getElementById('filterName').value.toLowerCase();
+
+            const filtered = allData.filter(item => {
+                const itemTeam = item.team || item['편성 조'] || '';
+                const itemName = (item.name || item['이름'] || '').toLowerCase();
+
+                const teamMatch = !teamFilter || itemTeam === teamFilter;
+                const nameMatch = !nameFilter || itemName.includes(nameFilter);
+
+                return teamMatch && nameMatch;
+            });
+
+            displayData(filtered);
+        }
+    </script>
+</body>
+</html>
