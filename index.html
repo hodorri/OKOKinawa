@@ -6,7 +6,8 @@
   <title>2025 OK금융그룹 리프레시 해외연수 · 오키나와</title>
   <style>
     :root{--ok-orange:#ff5a2c;--ok-sea:#5cc8ff;--ok-sky:#d6f2ff;--ink:#1c2a3a;--radius:18px}
-    *{box-sizing:border-box} body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--ok-sky),#ffffff 36%)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--ok-sky),#ffffff 36%)}
     header{padding:18px 16px 8px;background:linear-gradient(180deg,var(--ok-sky),var(--ok-sea));color:#053a53;border-bottom:4px solid var(--ok-sea)}
     .wrap{max-width:1100px;margin:0 auto;padding:18px}
     .brand{display:flex;align-items:center;gap:12px}
@@ -34,6 +35,8 @@
     .ok-badge img{height:42px}
     .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:#102a43;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.2);display:none}
     .help{font-size:12px;color:#6b7a89;margin:4px 0 12px}
+    .debug{display:none;margin-top:8px;padding:10px;border-radius:12px;background:#f7fbff;border:1px solid #e3eef9;font-family:ui-monospace,Consolas,monospace;font-size:12px;white-space:pre-wrap}
+    .debug-toggle{cursor:pointer;font-size:12px;color:#0b5cab;text-decoration:underline;margin-left:6px}
   </style>
 </head>
 <body>
@@ -42,12 +45,17 @@
       <div class="brand">
         <div>
           <h1>2025 OK금융그룹 리프레시 해외연수 · 오키나와</h1>
-          <div class="sub">자기소개서 제출 · 조회</div>
+          <div class="sub">자기소개서 제출 · 조회
+            <span class="debug-toggle" id="toggleDebug">[디버그 보기]</span>
+          </div>
         </div>
       </div>
       <div class="banner">
-        <!-- ✅ 배너 이미지: 루트에 okinawa-1.jpg 업로드 -->
-        <img src="okinawa-1.jpg" alt="오키나와 배경">
+        <!-- ✅ 배너: 영문 파일 우선, 실패 시 한글 파일명/폴더로 폴백 -->
+        <img id="bannerImg" src="okinawa-1.jpg" alt="오키나와 배경"
+             onerror="this.onerror=null;
+                      this.src='오키나와%20읏맨.JPG';
+                      this.onerror=function(){ this.src='images/okinawa-1.jpg'; }">
       </div>
       <div class="tabbar">
         <button class="active" data-tab="tab-submit">① 자기소개 입력</button>
@@ -88,6 +96,7 @@
           <button class="btn secondary" type="reset">초기화</button>
         </div>
       </form>
+      <div class="debug" id="debugBox"></div>
     </section>
 
     <!-- LIST -->
@@ -102,15 +111,21 @@
     </section>
   </main>
 
-  <!-- ✅ 우측 하단 배지: 루트에 okinawa-2.jpg 업로드 -->
+  <!-- 하단 배지: 폴백 체인 -->
   <div class="ok-badge">
-    <img src="okinawa-2.jpg" alt="읏맨">
-    <div><div style="font-weight:800;color:#ff5a2c">WELCOME TO OKINAWA</div><small>바다처럼 텐션↑ ㅋㅋ</small></div>
+    <img id="badgeImg" src="okinawa-2.jpg" alt="읏맨"
+         onerror="this.onerror=null;
+                  this.src='오키나와%20읏맨2.JPG';
+                  this.onerror=function(){ this.src='images/okinawa-2.jpg'; }">
+    <div>
+      <div style="font-weight:800;color:#ff5a2c">WELCOME TO OKINAWA</div>
+      <small>바다처럼 텐션↑ ㅋㅋ</small>
+    </div>
   </div>
   <div class="toast" id="toast"></div>
 
   <script>
-    // ✅ Apps Script Web App URL (서누콩 버전)
+    // ✅ Apps Script Web App URL (서누콩 배포 URL)
     const GAS_URL = "https://script.google.com/macros/s/AKfycbw-01aF6V5ZEcJz6RB3CPQRiEfhi38qEqV1ELM5ix05shXut_R0A7RiU3XLn5GmlHLr/exec";
 
     // 탭 전환
@@ -124,21 +139,33 @@
     });
 
     // 토스트
-    const toast=(msg)=>{const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+    const toast=(msg)=>{const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2400)}
+
+    // 디버그 토글
+    const dbg = document.getElementById('debugBox');
+    document.getElementById('toggleDebug').addEventListener('click',()=>{
+      dbg.style.display = dbg.style.display==='block' ? 'none' : 'block';
+    });
 
     // 제출
     document.getElementById('introForm').addEventListener('submit', async (e)=>{
       e.preventDefault();
       const form = e.currentTarget;
-      const data = Object.fromEntries(new FormData(form).entries()); // 키는 모두 한글 헤더
+      const data = Object.fromEntries(new FormData(form).entries()); // 키=한국어 헤더
       const payload = {action:'create', ...data};
       try{
-        const res = await fetch(GAS_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-        const json = await res.json();
-        if(json?.result==='ok'){ toast('제출 완료!'); form.reset(); }
-        else { console.error(json); toast('저장 실패: ' + (json?.message||'')); }
+        const res = await fetch(GAS_URL, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const text = await res.text();
+        let json; try{ json = JSON.parse(text); }catch(_){ json = {raw:text}; }
+        dbg.textContent = 'POST 응답:\n' + JSON.stringify(json, null, 2);
+        if(json?.result==='ok'){ toast('제출 완료!'); form.reset(); loadList(); }
+        else { console.error(json); toast('저장 실패: ' + (json?.message || '응답 확인 필요')); }
       }catch(err){
-        console.error(err); toast('제출 실패: 네트워크/GAS 설정 확인');
+        console.error(err); toast('제출 실패: 네트워크/GAS 설정 확인'); 
       }
     });
 
@@ -146,7 +173,9 @@
     async function loadList(){
       try{
         const res = await fetch(`${GAS_URL}?action=read`);
-        const json = await res.json();
+        const text = await res.text();
+        let json; try{ json = JSON.parse(text); }catch(_){ json = {raw:text}; }
+        dbg.textContent = 'GET 응답:\n' + JSON.stringify(json, null, 2);
         const rows = Array.isArray(json?.rows)? json.rows: [];
         renderList(rows);
       }catch(err){
